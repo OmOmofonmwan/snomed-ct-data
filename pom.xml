@@ -30,6 +30,11 @@
     </modules>
 
     <properties>
+        <!-- Properties Needed To Build On Java 24 (Start) -->
+        <java.version>24</java.version>
+        <maven-pmd-plugin.version>3.27.0</maven-pmd-plugin.version>
+        <!-- Properties Needed To Build On Java 24 (End) -->
+
         <!-- maven plugins -->
         <maven-artifacts.version>1.31.0</maven-artifacts.version>
         <maven-assembly-plugin.version>3.7.1</maven-assembly-plugin.version>
@@ -213,4 +218,29 @@
             </plugins>
         </pluginManagement>
     </build>
+
+    <profiles>
+        <!-- codeQuality profile to override pmd configuration from build-parent
+         Need to ovverride aggregate parameter as it is deprecated. -->
+        <profile>
+            <!-- To disable this, use something like "mvn install -P!codeQuality" -->
+            <id>codeQuality</id>
+            <activation>
+                <activeByDefault>false</activeByDefault>
+            </activation>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-pmd-plugin</artifactId>
+                        <configuration>
+                            <aggregate combine.self="override"></aggregate> <!-- Overridden due to deprecation -->
+                            <targetJdk>${java.version}</targetJdk>
+                        </configuration>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+    </profiles>
+
 </project>
