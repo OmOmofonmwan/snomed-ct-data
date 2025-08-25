@@ -25,4 +25,20 @@ jobs:
         uses: ikmdev/maven-clean-install-build-action@v3.4.0
         with:
           branch_name: ${{github.ref_name}}
+
+  test-build-job:
+    name: Test-Build
+    runs-on: ubuntu-20.04
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Setup Java
+        uses: actions/setup-java@v4
+        with:
+          distribution: 'zulu'
+          java-version: 23
+
+      - name: Read file
+        run: cat ./mvn/wrapper/maven-wrapper.properties
          
