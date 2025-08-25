@@ -40,5 +40,5 @@ jobs:
           java-version: 23
 
       - name: Read file
-        run: cat ./mvn/wrapper/maven-wrapper.properties
+        run: cat ./.mvn/wrapper/maven-wrapper.properties
          
